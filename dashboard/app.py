@@ -34,26 +34,10 @@ st.markdown("""
 </style>
 """,unsafe_allow_html=True)
 
-st.sidebar.image(
-    "dashboard/assets/ndvi_map.jpeg",
-    use_container_width=True
-)
-
-st.sidebar.title("🌾 AgriAstra")
-
-st.sidebar.markdown("---")
-
 if "Moisture_Stress" in df.columns:
-
-    selected_stress = st.sidebar.multiselect(
-        "Filter Stress Level",
-        df["Moisture_Stress"].unique(),
-        default=df["Moisture_Stress"].unique()
-    )
-
-    df = df[
-        df["Moisture_Stress"].isin(selected_stress)
-    ]
+    stress_counts = df["Moisture_Stress"].value_counts()
+else:
+    stress_counts = pd.Series(dtype=int)
 
 st.markdown("""
 <div class="hero">
@@ -69,8 +53,6 @@ st.info("""
 AgriAstra combines satellite imagery, rainfall data, machine learning,
 and GIS visualization to monitor crop health and generate irrigation advisories.
 """)
-
-stress_counts = df["Moisture_Stress"].value_counts()
 
 c1,c2,c3,c4 = st.columns(4)
 
