@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import os
 
 st.set_page_config(
     page_title="AgriAstra",
@@ -8,24 +7,9 @@ st.set_page_config(
     layout="wide"
 )
 
-# DEBUGGING CODE (ADD HERE)
-
-st.write("Current directory:", os.getcwd())
-
-st.write("Root files:", os.listdir())
-
-if os.path.exists("dashboard"):
-    st.write("Dashboard folder:", os.listdir("dashboard"))
-
-if os.path.exists("dashboard/assets"):
-    st.write("Dashboard assets:", os.listdir("dashboard/assets"))
-
-if os.path.exists("assets"):
-    st.write("Assets folder:", os.listdir("assets"))
-
 # Load dataset
-
 df = pd.read_csv("data/processed/agriastra_final_dataset.csv")
+
 st.title("🌾 AgriAstra")
 st.subheader("AI-Driven Crop Monitoring & Irrigation Advisory System")
 
@@ -57,23 +41,23 @@ st.header("🗺️ GIS Maps")
 
 m1, m2, m3 = st.columns(3)
 
-# with m1:
-#     st.image(
-#         "assets/ndvi_map.jpeg",
-#         caption="NDVI Map"
-#     )
+with m1:
+    st.image(
+        "dashboard/assets/ndvi_map.jpeg",
+        caption="NDVI Map"
+    )
 
-# with m2:
-#     st.image(
-#         "assets/moisture_stress_map.jpeg",
-#         caption="Moisture Stress Map"
-#     )
+with m2:
+    st.image(
+        "dashboard/assets/moisture_stress_map.jpeg",
+        caption="Moisture Stress Map"
+    )
 
-# with m3:
-#     st.image(
-#         "assets/irrigation_map.jpeg",
-#         caption="Irrigation Advisory Map"
-#     )
+with m3:
+    st.image(
+        "dashboard/assets/irrigation_map.jpeg",
+        caption="Irrigation Advisory Map"
+    )
 st.markdown("---")
 
 st.header("🚜 Irrigation Recommendations")
