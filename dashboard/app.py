@@ -200,7 +200,49 @@ tab1,tab2,tab3 = st.tabs(
 
 # Assuming 'tab1' and other tabs are defined above this block
 # Assuming 'tab1' and other tabs are defined above this block
+# Assuming 'tab1' and other tabs are defined above this block
 with tab1:
+    # GIS Dashboard Status Banner Block
+    st.markdown("""
+    <div style="
+    background:linear-gradient(90deg,#14532d,#166534);
+    padding:15px;
+    border-radius:12px;
+    margin-bottom:15px;
+    color:white;
+    box-shadow:0 4px 10px rgba(0,0,0,0.3);
+    ">
+    <h3 style="margin-top:0; color:white;">🛰️ GIS Dashboard Status</h3>
+
+    <table style="width:100%;font-size:16px;color:white;border-collapse:collapse;">
+    <tr>
+    <td>🟢 <b>Satellite Layer</b></td>
+    <td>Loaded</td>
+
+    <td>🤖 <b>AI Model</b></td>
+    <td>Random Forest</td>
+    </tr>
+
+    <tr>
+    <td>🗺️ <b>District Boundary</b></td>
+    <td>Loaded</td>
+
+    <td>📍 <b>Study Area</b></td>
+    <td>Nalgonda</td>
+    </tr>
+
+    <tr>
+    <td>🌧️ <b>Rainfall Data</b></td>
+    <td>Available</td>
+
+    <td>📅 <b>Status</b></td>
+    <td>Online</td>
+    </tr>
+    </table>
+
+    </div>
+    """, unsafe_allow_html=True)
+
     st.subheader("🌍 Interactive GIS Map")
 
     # Initialize the base map centered on Nalgonda
@@ -364,28 +406,82 @@ with tab1:
         )
 with tab2:
 
-    st.subheader("Moisture Stress Distribution")
+    st.subheader("📊 Analytics Dashboard")
 
-    fig = px.pie(
-        values=stress_counts.values,
-        names=stress_counts.index,
-        hole=0.55,
-        title="Moisture Stress Distribution"
+    left, right = st.columns(2)
+
+    with left:
+
+        fig = px.pie(
+            values=stress_counts.values,
+            names=stress_counts.index,
+            hole=0.55,
+            title="Moisture Stress Distribution"
+        )
+
+        fig.update_layout(
+            template="plotly_dark",
+            paper_bgcolor="#0b1220",
+            plot_bgcolor="#0b1220",
+            font=dict(color="white")
+        )
+
+        st.plotly_chart(
+            fig,
+            use_container_width=True
+        )
+
+    with right:
+
+        fig2 = px.bar(
+            x=stress_counts.index,
+            y=stress_counts.values,
+            color=stress_counts.index,
+            title="Stress Count"
+        )
+
+        fig2.update_layout(
+            template="plotly_dark",
+            paper_bgcolor="#0b1220",
+            plot_bgcolor="#0b1220",
+            xaxis_title="Stress Level",
+            yaxis_title="Samples"
+        )
+
+        st.plotly_chart(
+            fig2,
+            use_container_width=True
+        )
+
+    st.markdown("---")
+
+    st.subheader("📈 Summary")
+
+    c1, c2, c3, c4 = st.columns(4)
+
+    c1.metric(
+        "Total Samples",
+        len(df)
     )
 
-    fig.update_layout(
-        template="plotly_dark",
-        paper_bgcolor="#0b1220",
-        plot_bgcolor="#0b1220",
-        font=dict(color="white")
+    c2.metric(
+        "Low",
+        int(stress_counts.get("Low",0))
     )
 
-    st.plotly_chart(
-        fig,
-        use_container_width=True
+    c3.metric(
+        "Moderate",
+        int(stress_counts.get("Moderate",0))
     )
 
-    st.subheader("Dataset Preview")
+    c4.metric(
+        "High",
+        int(stress_counts.get("High",0))
+    )
+
+    st.markdown("---")
+
+    st.subheader("📋 Dataset Preview")
 
     st.dataframe(
         df.head(20),
