@@ -221,28 +221,61 @@ with tab1:
     MiniMap(toggle_display=True).add_to(m)
     MousePosition().add_to(m)
     
-    # Add Basemap Layer
+    # OpenStreetMap
     folium.TileLayer(
-        tiles="Esri WorldImagery",
-        attr="Esri",
-        name="Satellite"
+        "OpenStreetMap",
+        name="OpenStreetMap"
     ).add_to(m)
 
-    # Load and Style the GeoJSON Boundary
+    # CartoDB Light
+    folium.TileLayer(
+        "CartoDB Positron",
+        name="Light Map"
+    ).add_to(m)
+
+    # CartoDB Dark
+    folium.TileLayer(
+        "CartoDB Dark_Matter",
+        name="Dark Map"
+    ).add_to(m)
+
+    # Esri Satellite
+    folium.TileLayer(
+        tiles="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+        attr="Esri",
+        name="Satellite",
+        overlay=False,
+        control=True
+    ).add_to(m)
+
+    # Load and Style the GeoJSON Boundary with Hover Effects
     folium.GeoJson(
         "geojson/nalgonda.geojson",
         name="Nalgonda Boundary",
         style_function=lambda feature: {
-            "fillColor": "#00FF00",
-            "color": "#00FF00",
-            "weight": 3,
-            "fillOpacity": 0.15
+            "fillColor": "#00FF66",
+            "color": "#00FF66",
+            "weight": 2,
+            "fillOpacity": 0.12
+        },
+        highlight_function=lambda feature: {
+            "fillColor": "#00FF66",
+            "color": "#FFFF00",
+            "weight": 5,
+            "fillOpacity": 0.30
         },
         tooltip=folium.GeoJsonTooltip(
             fields=["shapeName"],
-            aliases=["District:"]
+            aliases=["District:"],
+            sticky=True
         )
     ).add_to(m)
+
+    # Automatically bound the camera frame tightly to your spatial features
+    m.fit_bounds([
+        [16.65, 78.70],
+        [17.55, 79.75]
+    ])
 
     # Add Study Area Marker
     folium.CircleMarker(
