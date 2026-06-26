@@ -195,28 +195,29 @@ tab1,tab2,tab3 = st.tabs(
 
 with tab1:
 
-    st.subheader("GIS Visualization")
+    st.subheader("🛰️ GIS Visualization")
 
-    m1,m2,m3 = st.columns(3)
+    st.image(
+        "dashboard/assets/ndvi_map.jpeg",
+        caption="🌱 NDVI Map",
+        use_container_width=True
+    )
 
-    with m1:
-        st.image(
-            "dashboard/assets/ndvi_map.jpeg",
-            caption="🌱 NDVI Map",
-            use_container_width=True
-        )
+    st.markdown("### Additional GIS Layers")
 
-    with m2:
+    c1, c2 = st.columns(2)
+
+    with c1:
         st.image(
             "dashboard/assets/moisture_stress_map.jpeg",
-            caption="💧 Moisture Stress Map",
+            caption="💧 Moisture Stress",
             use_container_width=True
         )
 
-    with m3:
+    with c2:
         st.image(
             "dashboard/assets/irrigation_map.jpeg",
-            caption="🚜 Irrigation Advisory Map",
+            caption="🚜 Irrigation Advisory",
             use_container_width=True
         )
 
