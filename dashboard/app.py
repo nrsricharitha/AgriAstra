@@ -1,3 +1,5 @@
+import folium
+from streamlit_folium import st_folium
 import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
@@ -195,6 +197,36 @@ tab1,tab2,tab3 = st.tabs(
 
 with tab1:
 
+    st.subheader("🌍 Interactive GIS Map")
+
+    m = folium.Map(
+        location=[17.0575, 79.2671],
+        zoom_start=10,
+        tiles=None
+    )
+
+    folium.TileLayer(
+        tiles="Esri WorldImagery",
+        attr="Esri",
+        name="Satellite"
+    ).add_to(m)
+
+    folium.Marker(
+        [17.0575, 79.2671],
+        popup="Nalgonda District",
+        tooltip="Study Area"
+    ).add_to(m)
+
+    folium.LayerControl().add_to(m)
+
+    st_folium(
+        m,
+        use_container_width=True,
+        height=500
+    )
+
+    st.markdown("---")
+
     st.subheader("🛰️ GIS Visualization")
 
     st.image(
@@ -220,7 +252,6 @@ with tab1:
             caption="🚜 Irrigation Advisory",
             use_container_width=True
         )
-
 with tab2:
 
     st.subheader("Moisture Stress Distribution")
