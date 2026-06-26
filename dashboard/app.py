@@ -220,7 +220,7 @@ MiniMap(
 ).add_to(m)
 
 MousePosition().add_to(m)
-    folium.TileLayer(
+folium.TileLayer(
         tiles="Esri WorldImagery",
         attr="Esri",
         name="Satellite"
