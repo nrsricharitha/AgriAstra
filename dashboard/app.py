@@ -207,7 +207,6 @@ with tab1:
     zoom_start=10,
     tiles=None,
     control_scale=True
-)
     )
     Fullscreen(
     position="topright",
