@@ -226,11 +226,15 @@ with tab1:
     )
 ).add_to(m)
 
-    folium.Marker(
-        [17.0575, 79.2671],
-        popup="Nalgonda District",
-        tooltip="Study Area"
-    ).add_to(m)
+    folium.CircleMarker(
+    location=[17.0575, 79.2671],
+    radius=8,
+    color="yellow",
+    fill=True,
+    fill_color="red",
+    fill_opacity=1,
+    popup="Study Area - Nalgonda"
+).add_to(m)
 
     folium.LayerControl().add_to(m)
 
