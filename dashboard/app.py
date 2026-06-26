@@ -198,61 +198,67 @@ tab1,tab2,tab3 = st.tabs(
     ]
 )
 
+# Assuming 'tab1' and other tabs are defined above this block
 with tab1:
-
     st.subheader("🌍 Interactive GIS Map")
 
+    # Initialize the base map centered on Nalgonda
     m = folium.Map(
-    location=[17.0575, 79.2671],
-    zoom_start=10,
-    tiles=None,
-    control_scale=True
+        location=[17.0575, 79.2671],
+        zoom_start=10,
+        tiles=None,
+        control_scale=True
     )
+    
+    # Add GIS Plugins to the map object
     Fullscreen(
-    position="topright",
-    title="Full Screen",
-    title_cancel="Exit Full Screen",
-    force_separate_button=True
-).add_to(m)
+        position="topright",
+        title="Full Screen",
+        title_cancel="Exit Full Screen",
+        force_separate_button=True
+    ).add_to(m)
 
-MiniMap(
-    toggle_display=True
-).add_to(m)
-
-MousePosition().add_to(m)
-folium.TileLayer(
+    MiniMap(toggle_display=True).add_to(m)
+    MousePosition().add_to(m)
+    
+    # Add Basemap Layer
+    folium.TileLayer(
         tiles="Esri WorldImagery",
         attr="Esri",
         name="Satellite"
     ).add_to(m)
 
+    # Load and Style the GeoJSON Boundary
     folium.GeoJson(
-    "geojson/nalgonda.geojson",
-    name="Nalgonda Boundary",
-    style_function=lambda feature: {
-        "fillColor": "#00FF00",
-        "color": "#00FF00",
-        "weight": 3,
-        "fillOpacity": 0.15
-    },
-    tooltip=folium.GeoJsonTooltip(
-        fields=["shapeName"],
-        aliases=["District:"]
-    )
-).add_to(m)
+        "geojson/nalgonda.geojson",
+        name="Nalgonda Boundary",
+        style_function=lambda feature: {
+            "fillColor": "#00FF00",
+            "color": "#00FF00",
+            "weight": 3,
+            "fillOpacity": 0.15
+        },
+        tooltip=folium.GeoJsonTooltip(
+            fields=["shapeName"],
+            aliases=["District:"]
+        )
+    ).add_to(m)
 
+    # Add Study Area Marker
     folium.CircleMarker(
-    location=[17.0575, 79.2671],
-    radius=8,
-    color="yellow",
-    fill=True,
-    fill_color="red",
-    fill_opacity=1,
-    popup="Study Area - Nalgonda"
-).add_to(m)
+        location=[17.0575, 79.2671],
+        radius=8,
+        color="yellow",
+        fill=True,
+        fill_color="red",
+        fill_opacity=1,
+        popup="Study Area - Nalgonda"
+    ).add_to(m)
 
+    # Add Map Controls
     folium.LayerControl().add_to(m)
 
+    # Render Folium Map in Streamlit
     st_folium(
         m,
         use_container_width=True,
@@ -261,30 +267,31 @@ folium.TileLayer(
 
     st.markdown("---")
 
-st.subheader("🛰️ GIS Visualization")
+    # GIS Visualization components kept inside tab1 to preserve layout
+    st.subheader("🛰️ GIS Visualization")
 
-m1, m2, m3 = st.columns(3)
+    m1, m2, m3 = st.columns(3)
 
-with m1:
-    st.image(
-        "dashboard/assets/ndvi_map.jpeg",
-        caption="🌱 NDVI Map",
-        use_container_width=True
-    )
+    with m1:
+        st.image(
+            "dashboard/assets/ndvi_map.jpeg",
+            caption="🌱 NDVI Map",
+            use_container_width=True
+        )
 
-with m2:
-    st.image(
-        "dashboard/assets/moisture_stress_map.jpeg",
-        caption="💧 Moisture Stress Map",
-        use_container_width=True
-    )
+    with m2:
+        st.image(
+            "dashboard/assets/moisture_stress_map.jpeg",
+            caption="💧 Moisture Stress Map",
+            use_container_width=True
+        )
 
-with m3:
-    st.image(
-        "dashboard/assets/irrigation_map.jpeg",
-        caption="🚜 Irrigation Advisory Map",
-        use_container_width=True
-    )
+    with m3:
+        st.image(
+            "dashboard/assets/irrigation_map.jpeg",
+            caption="🚜 Irrigation Advisory Map",
+            use_container_width=True
+        )
 with tab2:
 
     st.subheader("Moisture Stress Distribution")
