@@ -236,35 +236,32 @@ with left:
     st.markdown("""
     <div style="
     background:#16213E;
-    padding:25px;
+    padding:18px;
     border-radius:15px;
-    border-left:6px solid #22c55e;
-    box-shadow:0 4px 12px rgba(0,0,0,.35);
-    height:320px;
+    border-left:5px solid #22c55e;
+    box-shadow:0 4px 10px rgba(0,0,0,.35);
     ">
 
-    <h2 style="color:white;">🤖 AI Model Summary</h2>
+    <h3 style="color:white;margin-top:0;">
+    🤖 AI Model Summary
+    </h3>
 
     <hr style="border:1px solid #2E3B55;">
 
-    <p style="font-size:18px;color:white;">
-    <b>Model</b><br>
-    🌲 Random Forest
+    <p style="color:white;font-size:16px;">
+    🌲 <b>Model:</b> Random Forest
     </p>
 
-    <p style="font-size:18px;color:white;">
-    <b>Prediction Target</b><br>
-    💧 Moisture Stress
+    <p style="color:white;font-size:16px;">
+    💧 <b>Prediction:</b> Moisture Stress
     </p>
 
-    <p style="font-size:18px;color:white;">
-    <b>Accuracy</b><br>
-    🎯 100%
+    <p style="color:white;font-size:16px;">
+    🎯 <b>Accuracy:</b> 100%
     </p>
 
-    <p style="font-size:18px;color:white;">
-    <b>Status</b><br>
-    🟢 Production Ready
+    <p style="color:white;font-size:16px;">
+    🟢 <b>Status:</b> Production Ready
     </p>
 
     </div>
