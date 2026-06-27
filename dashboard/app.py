@@ -19,6 +19,31 @@ def load_data():
     return pd.read_csv("data/processed/agriastra_final_dataset.csv")
 
 df = load_data()
+st.markdown("""
+<div style="
+background:#111827;
+padding:10px;
+border-radius:12px;
+margin-bottom:15px;
+display:flex;
+justify-content:space-around;
+font-size:16px;
+font-weight:bold;
+color:white;
+">
+
+<span>🟢 System Online</span>
+
+<span>🛰️ Satellite Connected</span>
+
+<span>🤖 AI Ready</span>
+
+<span>🗺️ GIS Loaded</span>
+
+<span>📅 Last Updated: Today</span>
+
+</div>
+""", unsafe_allow_html=True)
 
 st.markdown("""
 <style>
