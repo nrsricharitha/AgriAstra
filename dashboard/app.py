@@ -517,76 +517,95 @@ with tab2:
 
     st.subheader("📊 Analytics Dashboard")
 
-    left, right = st.columns(2)
+    row1_col1, row1_col2 = st.columns(2)
 
-    with left:
+    with row1_col1:
 
-        fig = px.pie(
-            values=stress_counts.values,
-            names=stress_counts.index,
-            hole=0.55,
-            title="Moisture Stress Distribution"
+        st.markdown("### 📈 NDVI Distribution")
+
+        fig_ndvi = px.histogram(
+            df,
+            x="NDVI",
+            nbins=30,
+            color_discrete_sequence=["#00ff99"]
         )
 
-        fig.update_layout(
+        fig_ndvi.update_layout(
             template="plotly_dark",
             paper_bgcolor="#0b1220",
-            plot_bgcolor="#0b1220",
-            font=dict(color="white")
+            plot_bgcolor="#0b1220"
         )
 
         st.plotly_chart(
-            fig,
+            fig_ndvi,
             use_container_width=True
         )
 
-    with right:
+    with row1_col2:
 
-        fig2 = px.bar(
-            x=stress_counts.index,
-            y=stress_counts.values,
-            color=stress_counts.index,
-            title="Stress Count"
+        st.markdown("### 🥧 Irrigation Recommendation Distribution")
+
+        fig_irrigation = px.pie(
+            df,
+            names="Irrigation_Advisory",
+            hole=0.55
         )
 
-        fig2.update_layout(
+        fig_irrigation.update_layout(
             template="plotly_dark",
-            paper_bgcolor="#0b1220",
-            plot_bgcolor="#0b1220",
-            xaxis_title="Stress Level",
-            yaxis_title="Samples"
+            paper_bgcolor="#0b1220"
         )
 
         st.plotly_chart(
-            fig2,
+            fig_irrigation,
             use_container_width=True
         )
 
-    st.markdown("---")
+    row2_col1, row2_col2 = st.columns(2)
 
-    st.subheader("📈 Summary")
+    with row2_col1:
 
-    c1, c2, c3, c4 = st.columns(4)
+        st.markdown("### 📊 Rainfall Distribution")
 
-    c1.metric(
-        "Total Samples",
-        len(df)
-    )
+        fig_rain = px.histogram(
+            df,
+            x="Rainfall",
+            nbins=30,
+            color_discrete_sequence=["#3399ff"]
+        )
 
-    c2.metric(
-        "Low",
-        int(stress_counts.get("Low",0))
-    )
+        fig_rain.update_layout(
+            template="plotly_dark",
+            paper_bgcolor="#0b1220",
+            plot_bgcolor="#0b1220"
+        )
 
-    c3.metric(
-        "Moderate",
-        int(stress_counts.get("Moderate",0))
-    )
+        st.plotly_chart(
+            fig_rain,
+            use_container_width=True
+        )
 
-    c4.metric(
-        "High",
-        int(stress_counts.get("High",0))
-    )
+    with row2_col2:
+
+        st.markdown("### 🌡️ NDVI by Moisture Stress")
+
+        fig_stress = px.box(
+            df,
+            x="Moisture_Stress",
+            y="NDVI",
+            color="Moisture_Stress"
+        )
+
+        fig_stress.update_layout(
+            template="plotly_dark",
+            paper_bgcolor="#0b1220",
+            plot_bgcolor="#0b1220"
+        )
+
+        st.plotly_chart(
+            fig_stress,
+            use_container_width=True
+        )
 
     st.markdown("---")
 
@@ -596,7 +615,6 @@ with tab2:
         df.head(20),
         use_container_width=True
     )
-
 with tab3:
 
     st.subheader("Project Information")
