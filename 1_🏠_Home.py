@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import plotly.graph_objects as go
 
 st.set_page_config(
     page_title="AgriAstra",
@@ -13,11 +12,6 @@ def load_data():
     return pd.read_csv("data/processed/agriastra_final_dataset.csv")
 
 df = load_data()
-
-if "Moisture_Stress" in df.columns:
-    stress_counts = df["Moisture_Stress"].value_counts()
-else:
-    stress_counts = pd.Series(dtype=int)
 
 st.markdown("""
 <style>
@@ -34,6 +28,21 @@ st.markdown("""
     padding-bottom:1rem;
 }
 
+/* Hero Banner */
+.hero{
+    background:linear-gradient(135deg,#0f766e,#166534);
+    padding:35px;
+    border-radius:18px;
+    text-align:center;
+    color:white;
+    box-shadow:0px 8px 25px rgba(0,0,0,0.35);
+}
+
+/* Section Titles */
+h1,h2,h3,h4{
+    color:#ffffff;
+}
+
 /* Metric Cards */
 div[data-testid="metric-container"]{
     background:#16213E;
@@ -48,6 +57,31 @@ div[data-testid="metric-container"]:hover{
     transition:.3s;
 }
 
+/* Tabs */
+.stTabs [data-baseweb="tab"]{
+    background:#16213E;
+    border-radius:10px;
+    color:white;
+    margin-right:8px;
+}
+
+.stTabs [aria-selected="true"]{
+    background:#00b894;
+    color:white;
+}
+
+/* Dataframe */
+[data-testid="stDataFrame"]{
+    border-radius:12px;
+}
+
+/* Expanders */
+.streamlit-expanderHeader{
+    background:#16213E;
+    border-radius:10px;
+}
+
+/* Footer */
 footer{
     visibility:hidden;
 }
@@ -55,8 +89,13 @@ footer{
 </style>
 """, unsafe_allow_html=True)
 
-# ---------------- HERO ----------------
+# ── Stress counts ──────────────────────────────────────────────────────────────
+if "Moisture_Stress" in df.columns:
+    stress_counts = df["Moisture_Stress"].value_counts()
+else:
+    stress_counts = pd.Series(dtype=int)
 
+# ── Hero Banner ────────────────────────────────────────────────────────────────
 st.markdown("""
 <div style="
 background:linear-gradient(135deg,#0f766e,#166534,#15803d);
@@ -67,7 +106,7 @@ box-shadow:0 8px 30px rgba(0,0,0,.45);
 margin-bottom:20px;
 ">
 
-<h1 style="color:white;font-size:52px;">
+<h1 style="color:white;font-size:52px;margin-bottom:10px;">
 🌾 AgriAstra
 </h1>
 
@@ -101,7 +140,7 @@ Random Forest
 
 <div>
 <b>🛰️ Data</b><br>
-Sentinel-1 • Sentinel-2 • CHIRPS
+Sentinel + CHIRPS
 </div>
 
 </div>
@@ -109,219 +148,93 @@ Sentinel-1 • Sentinel-2 • CHIRPS
 </div>
 """, unsafe_allow_html=True)
 
-# ---------------- INTRO ----------------
+st.markdown("")
 
 st.info("""
-AgriAstra combines satellite imagery, rainfall data, machine learning, and GIS visualization to monitor crop health and generate intelligent irrigation advisories for precision agriculture.
+AgriAstra combines satellite imagery, rainfall data, machine learning,
+and GIS visualization to monitor crop health and generate irrigation advisories.
 """)
 
-# ---------------- KPI CARDS ----------------
-
+# ── KPI Cards ──────────────────────────────────────────────────────────────────
 c1, c2, c3, c4 = st.columns(4)
 
 with c1:
-    st.metric(
-        "📍 Samples",
-        len(df)
-    )
+    st.markdown(f"""
+    <div style="
+    background:#16213E;
+    padding:20px;
+    border-left:6px solid #38bdf8;
+    border-radius:15px;
+    text-align:center;
+    box-shadow:0 4px 10px rgba(0,0,0,.35);
+    ">
+        <h4 style="color:white;">📍 Samples</h4>
+        <h1 style="color:#38bdf8;">{len(df)}</h1>
+        <p style="color:#cbd5e1;">Total Records</p>
+    </div>
+    """, unsafe_allow_html=True)
 
 with c2:
-    st.metric(
-        "🟢 Low Stress",
-        int(stress_counts.get("Low",0))
-    )
+    st.markdown(f"""
+    <div style="
+    background:#16213E;
+    padding:20px;
+    border-left:6px solid #22c55e;
+    border-radius:15px;
+    text-align:center;
+    box-shadow:0 4px 10px rgba(0,0,0,.35);
+    ">
+        <h4 style="color:white;">🟢 Low Stress</h4>
+        <h1 style="color:#22c55e;">{int(stress_counts.get("Low", 0))}</h1>
+        <p style="color:#cbd5e1;">Healthy Crops</p>
+    </div>
+    """, unsafe_allow_html=True)
 
 with c3:
-    st.metric(
-        "🟡 Moderate Stress",
-        int(stress_counts.get("Moderate",0))
-    )
+    st.markdown(f"""
+    <div style="
+    background:#16213E;
+    padding:20px;
+    border-left:6px solid #facc15;
+    border-radius:15px;
+    text-align:center;
+    box-shadow:0 4px 10px rgba(0,0,0,.35);
+    ">
+        <h4 style="color:white;">🟡 Moderate Stress</h4>
+        <h1 style="color:#facc15;">{int(stress_counts.get("Moderate", 0))}</h1>
+        <p style="color:#cbd5e1;">Needs Monitoring</p>
+    </div>
+    """, unsafe_allow_html=True)
 
 with c4:
-    st.metric(
-        "🔴 High Stress",
-        int(stress_counts.get("High",0))
-    )
+    st.markdown(f"""
+    <div style="
+    background:#16213E;
+    padding:20px;
+    border-left:6px solid #ef4444;
+    border-radius:15px;
+    text-align:center;
+    box-shadow:0 4px 10px rgba(0,0,0,.35);
+    ">
+        <h4 style="color:white;">🔴 High Stress</h4>
+        <h1 style="color:#ef4444;">{int(stress_counts.get("High", 0))}</h1>
+        <p style="color:#cbd5e1;">Immediate Action</p>
+    </div>
+    """, unsafe_allow_html=True)
 
 st.markdown("---")
 
-# ---------------- AI MODEL ----------------
+# ── Irrigation Recommendations ─────────────────────────────────────────────────
+st.markdown("## 🚜 Irrigation Recommendations")
 
-left, right = st.columns([1,2])
-
-with left:
-
-    st.markdown("""
-<div style="
-background:#16213E;
-padding:20px;
-border-radius:15px;
-border-left:5px solid #22c55e;
-">
-
-<h3 style="color:white;">
-🤖 AI Model Summary
-</h3>
-
-<hr>
-
-<p style="color:white;">
-🌲 <b>Model:</b> Random Forest
-</p>
-
-<p style="color:white;">
-💧 <b>Prediction:</b> Moisture Stress
-</p>
-
-<p style="color:white;">
-🎯 <b>Accuracy:</b> 100%
-</p>
-
-<p style="color:white;">
-🟢 <b>Status:</b> Production Ready
-</p>
-
-</div>
-""", unsafe_allow_html=True)
-
-with right:
-
-    gauge = go.Figure(
-        go.Indicator(
-            mode="gauge+number",
-            value=100,
-            title={"text":"Accuracy (%)"},
-            gauge={
-                "axis":{"range":[0,100]},
-                "bar":{"color":"limegreen"},
-                "steps":[
-                    {"range":[0,50],"color":"#8B0000"},
-                    {"range":[50,80],"color":"orange"},
-                    {"range":[80,100],"color":"green"}
-                ]
-            }
-        )
-    )
-
-    gauge.update_layout(
-        template="plotly_dark",
-        paper_bgcolor="#0b1220",
-        height=320
-    )
-
-    st.plotly_chart(
-        gauge,
-        use_container_width=True
-    )
-
-st.markdown("---")
-
-# ---------------- FEATURES ----------------
-
-st.markdown("## ⭐ Key Features")
-
-f1, f2, f3 = st.columns(3)
-
-with f1:
-    st.success("""
-### 🛰️ Satellite Monitoring
-
-Monitor crop health using Sentinel-1 and Sentinel-2 imagery.
-""")
-
-with f2:
-    st.info("""
-### 🤖 AI Prediction
-
-Random Forest model predicts crop moisture stress with high accuracy.
-""")
-
-with f3:
-    st.warning("""
-### 🚜 Smart Irrigation
-
-Generate irrigation recommendations based on crop stress levels.
-""")
-
-st.markdown("---")
-
-# ---------------- QUICK OVERVIEW ----------------
-
-st.markdown("## 🚜 System Quick Overview")
-
-with st.expander(
-    "View Crop Status",
-    expanded=True
-):
-
-    col1, col2, col3 = st.columns(3)
-
-    with col1:
-        st.success("""
-🟢 **Low Stress**
-
-Healthy vegetation.
-
-No irrigation required.
-""")
-
-    with col2:
-        st.warning("""
-🟡 **Moderate Stress**
-
-Requires monitoring.
-
-Irrigate within 3 days.
-""")
-
-    with col3:
-        st.error("""
-🔴 **High Stress**
-
-Critical moisture stress.
-
-Immediate irrigation required.
-""")
-
-st.markdown("---")
-
-# ---------------- NAVIGATION ----------------
-
-st.markdown("## 🚀 Explore AgriAstra")
-
-c1, c2, c3 = st.columns(3)
-
-with c1:
-    st.page_link(
-        "pages/1_🗺️_GIS_Dashboard.py",
-        label="🗺️ Open GIS Dashboard"
-    )
-
-with c2:
-    st.page_link(
-        "pages/2_📊_Analytics.py",
-        label="📊 View Analytics"
-    )
-
-with c3:
-    st.page_link(
-        "pages/3_🤖_AI_Model.py",
-        label="🤖 AI Model"
-    )
+with st.expander("View Recommendations"):
+    st.success("🟢 Low → No irrigation needed")
+    st.warning("🟡 Moderate → Irrigate within 3 days")
+    st.error("🔴 High → Irrigate immediately")
 
 st.markdown("---")
 
 st.markdown(
-"""
-<center>
-
-<h4 style="color:white;">
-🌾 AgriAstra
-</h4>
-
-Precision Agriculture using AI • GIS • Remote Sensing
-
-</center>
-""",
-unsafe_allow_html=True
+    "<center><h4>🌾 AgriAstra | Precision Agriculture using AI + GIS</h4></center>",
+    unsafe_allow_html=True
 )
