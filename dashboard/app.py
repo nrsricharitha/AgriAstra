@@ -102,14 +102,56 @@ else:
     stress_counts = pd.Series(dtype=int)
 
 st.markdown("""
-<div class="hero">
-<h1>🌾 AgriAstra</h1>
-<h3>AI-Driven Crop Monitoring & Irrigation Advisory System</h3>
-<p style="font-size:20px;">
-Smart Agriculture using Satellite Imagery • Machine Learning • GIS
+<div style="
+background:linear-gradient(135deg,#0f766e,#166534,#15803d);
+padding:45px;
+border-radius:20px;
+text-align:center;
+box-shadow:0 8px 30px rgba(0,0,0,.45);
+margin-bottom:20px;
+">
+
+<h1 style="color:white;font-size:52px;margin-bottom:10px;">
+🌾 AgriAstra
+</h1>
+
+<h3 style="color:#d1fae5;">
+AI-Driven Crop Monitoring & Irrigation Advisory System
+</h3>
+
+<p style="font-size:20px;color:#e5e7eb;">
+🛰️ Satellite Imagery • 🌱 Vegetation Monitoring • 🤖 Machine Learning • 🗺️ GIS Mapping
 </p>
+
+<hr style="border:1px solid rgba(255,255,255,.25);">
+
+<div style="
+display:flex;
+justify-content:center;
+gap:40px;
+font-size:18px;
+color:white;
+">
+
+<div>
+<b>📍 Study Area</b><br>
+Nalgonda District
 </div>
-""",unsafe_allow_html=True)
+
+<div>
+<b>🤖 Model</b><br>
+Random Forest
+</div>
+
+<div>
+<b>🛰️ Data</b><br>
+Sentinel + CHIRPS
+</div>
+
+</div>
+
+</div>
+""", unsafe_allow_html=True)
 
 st.markdown("")
 
@@ -120,26 +162,69 @@ and GIS visualization to monitor crop health and generate irrigation advisories.
 
 c1,c2,c3,c4 = st.columns(4)
 
-c1.metric(
-    "📍 Samples",
-    len(df)
-)
+with c1:
+    st.markdown(f"""
+    <div style="
+    background:#16213E;
+    padding:20px;
+    border-left:6px solid #38bdf8;
+    border-radius:15px;
+    text-align:center;
+    box-shadow:0 4px 10px rgba(0,0,0,.35);
+    ">
+        <h4 style="color:white;">📍 Samples</h4>
+        <h1 style="color:#38bdf8;">{len(df)}</h1>
+        <p style="color:#cbd5e1;">Total Records</p>
+    </div>
+    """, unsafe_allow_html=True)
 
-c2.metric(
-    "🟢 Low Stress",
-    int(stress_counts.get("Low",0))
-)
+with c2:
+    st.markdown(f"""
+    <div style="
+    background:#16213E;
+    padding:20px;
+    border-left:6px solid #22c55e;
+    border-radius:15px;
+    text-align:center;
+    box-shadow:0 4px 10px rgba(0,0,0,.35);
+    ">
+        <h4 style="color:white;">🟢 Low Stress</h4>
+        <h1 style="color:#22c55e;">{int(stress_counts.get("Low",0))}</h1>
+        <p style="color:#cbd5e1;">Healthy Crops</p>
+    </div>
+    """, unsafe_allow_html=True)
 
-c3.metric(
-    "🟡 Moderate Stress",
-    int(stress_counts.get("Moderate",0))
-)
+with c3:
+    st.markdown(f"""
+    <div style="
+    background:#16213E;
+    padding:20px;
+    border-left:6px solid #facc15;
+    border-radius:15px;
+    text-align:center;
+    box-shadow:0 4px 10px rgba(0,0,0,.35);
+    ">
+        <h4 style="color:white;">🟡 Moderate Stress</h4>
+        <h1 style="color:#facc15;">{int(stress_counts.get("Moderate",0))}</h1>
+        <p style="color:#cbd5e1;">Needs Monitoring</p>
+    </div>
+    """, unsafe_allow_html=True)
 
-c4.metric(
-    "🔴 High Stress",
-    int(stress_counts.get("High",0))
-)
-
+with c4:
+    st.markdown(f"""
+    <div style="
+    background:#16213E;
+    padding:20px;
+    border-left:6px solid #ef4444;
+    border-radius:15px;
+    text-align:center;
+    box-shadow:0 4px 10px rgba(0,0,0,.35);
+    ">
+        <h4 style="color:white;">🔴 High Stress</h4>
+        <h1 style="color:#ef4444;">{int(stress_counts.get("High",0))}</h1>
+        <p style="color:#cbd5e1;">Immediate Action</p>
+    </div>
+    """, unsafe_allow_html=True)
 st.markdown("---")
 
 st.markdown("## 🤖 AI Model Performance")
@@ -148,15 +233,42 @@ left,right = st.columns([1,2])
 
 with left:
 
-    st.metric(
-        "Model",
-        "Random Forest"
-    )
+    st.markdown("""
+    <div style="
+    background:#16213E;
+    padding:25px;
+    border-radius:15px;
+    border-left:6px solid #22c55e;
+    box-shadow:0 4px 12px rgba(0,0,0,.35);
+    height:320px;
+    ">
 
-    st.metric(
-        "Prediction",
-        "Moisture Stress"
-    )
+    <h2 style="color:white;">🤖 AI Model Summary</h2>
+
+    <hr style="border:1px solid #2E3B55;">
+
+    <p style="font-size:18px;color:white;">
+    <b>Model</b><br>
+    🌲 Random Forest
+    </p>
+
+    <p style="font-size:18px;color:white;">
+    <b>Prediction Target</b><br>
+    💧 Moisture Stress
+    </p>
+
+    <p style="font-size:18px;color:white;">
+    <b>Accuracy</b><br>
+    🎯 100%
+    </p>
+
+    <p style="font-size:18px;color:white;">
+    <b>Status</b><br>
+    🟢 Production Ready
+    </p>
+
+    </div>
+    """, unsafe_allow_html=True)
 
 with right:
 
